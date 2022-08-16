@@ -1,7 +1,7 @@
 <?php
-  require_once "config.php";
+  require_once "config/config.php";
 
-  function get_images(int $id): void {
+  function get_images(int $id): array {
     global $connect;
     $images = array();
 
@@ -10,6 +10,12 @@
       $images[] = $row['image'];
     }
 
+    $response = array(
+      'status' => 200,
+      'message' => "Success.",
+      'data' => $images,
+    );
 
+    return $response;
   }
 ?>
