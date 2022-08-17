@@ -1,6 +1,20 @@
 <?php
   require_once "config/config.php";
 
+  function check_token(string $personalToken): bool
+  {
+    global $connect;
+
+    $sql = "SELECT id FROM token WHERE id = '$personalToken'";
+    $result = mysqli_query($connect, $sql);
+    $resultIsValid = mysqli_fetch_all($result);
+
+    if ( $resultIsValid )
+      return true;
+
+    return false;
+  }
+
   function user_login(string $username, string $password): array
   {
     global $connect;
@@ -14,7 +28,7 @@
 
     if ( $result )
     {
-      $personalToken = md5($username . rand(0, 25));
+      $personalToken = md5($username . rand(0, 255));
 
       $authenticate = mysqli_query(
         $connect, "INSERT INTO token VALUES ('$personalToken', " . $result['id'] . ")"
@@ -28,9 +42,8 @@
           'username' => $username,
           'password' => sha1($password),
           'date' => date("c", time()),
-          'personal_key' => $personalToken,
+          'personal_token' => $personalToken,
         );
-        header("Content-Type: application/json", true, 200);
       }
       else
       {
@@ -38,7 +51,6 @@
           'status' => 500,
           'message' => "Failed to Logged In, Server Internal Failure, Please contact admin...",
         );
-        header("Content-Type: application/json", true, 500);
       }
     }
     else
@@ -49,27 +61,40 @@
       );
     }
 
+    header("Content-Type: application/json", true, $response['status']);
     return $response;
   }
 
   function get_images(string $personalToken, int $sessionID): array
   {
     global $connect;
-    $images = array();
-    $imageViewPath = "localhost/lovo-api/helpers/image_view.php?image_id=";
 
-    $sql = $connect -> query("SELECT id FROM image WHERE id_session = $sessionID");
-    while ( $row = mysqli_fetch_assoc($sql) )
+    if ( check_token($personalToken) )
     {
-      $images[] = $imageViewPath . $row['id'];
+      $images = array();
+      $imageViewPath = "localhost/lovo-api/helpers/image_view.php?image_id=";
+
+      $sql = $connect -> query("SELECT id FROM image WHERE id_session = $sessionID");
+      while ( $row = mysqli_fetch_assoc($sql) )
+      {
+        $images[] = $imageViewPath . $row['id'];
+      }
+
+      $response = array(
+        'status' => 200,
+        'message' => "Success.",
+        'data' => $images,
+      );
+    }
+    else
+    {
+      $response = array(
+        'status' => 401,
+        'message' => "Invalid Token Verification, Please try again...",
+      );
     }
 
-    $response = array(
-      'status' => 200,
-      'message' => "Success.",
-      'data' => $images,
-    );
-
+    header("Content-Type: application/json", true, $response['status']);
     return $response;
   }
 ?>
