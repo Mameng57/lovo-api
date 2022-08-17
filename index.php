@@ -3,11 +3,15 @@
 
   $fn = $_GET['function'];
 
-  if ( function_exists($fn) ) {
+  if ( function_exists($fn) )
+  {
+    $id = 0;
+
     header("Content-Type: application/json");
-    echo json_encode($fn());
+    echo json_encode($fn($id));
   }
-  else {
+  else
+  {
     echo "Tidak Ada";
   }
 ?>

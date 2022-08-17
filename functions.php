@@ -1,12 +1,14 @@
 <?php
   require_once "config/config.php";
 
-  function get_images(int $id): array {
+  function get_images(int $sessionID): array
+  {
     global $connect;
     $images = array();
 
-    $sql = $connect -> query("SELECT image FROM images WHERE id_user = $id");
-    while ( $row = mysqli_fetch_assoc($sql) ) {
+    $sql = $connect -> query("SELECT * FROM image WHERE id_session = $sessionID");
+    while ( $row = mysqli_fetch_assoc($sql) )
+    {
       $images[] = $row['image'];
     }
 
