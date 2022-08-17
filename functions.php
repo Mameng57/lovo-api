@@ -14,10 +14,10 @@
 
     if ( $result )
     {
-      $personalKey = md5($username . rand(0, 25));
+      $personalToken = md5($username . rand(0, 25));
 
       $authenticate = mysqli_query(
-        $connect, "INSERT INTO token VALUES ('$personalKey', " . $result['id'] . ")"
+        $connect, "INSERT INTO token VALUES ('$personalToken', " . $result['id'] . ")"
       );
 
       if ( $authenticate )
@@ -28,7 +28,7 @@
           'username' => $username,
           'password' => sha1($password),
           'date' => date("c", time()),
-          'personal_key' => $personalKey,
+          'personal_key' => $personalToken,
         );
         header("Content-Type: application/json", true, 200);
       }
@@ -52,7 +52,7 @@
     return $response;
   }
 
-  function get_images(int $sessionID): array
+  function get_images(string $personalToken, int $sessionID): array
   {
     global $connect;
     $images = array();
