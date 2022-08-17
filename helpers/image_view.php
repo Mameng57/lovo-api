@@ -7,7 +7,7 @@
     $query = mysqli_query($connect, $sql);
     $imageData = mysqli_fetch_array($query, MYSQLI_NUM);
 
-    header("Content-Type: image/jpeg");
+    header("Content-Type: image/jpeg", true, 200);
     echo $imageData[0];
   }
 ?>
