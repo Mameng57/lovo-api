@@ -5,7 +5,7 @@
 
   if ( function_exists($fn) )
   {
-    $id = 0;
+    $id = 1;
 
     header("Content-Type: application/json");
     echo json_encode($fn($id));

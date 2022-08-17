@@ -1,9 +1,9 @@
 <?php
   require_once ($_SERVER['DOCUMENT_ROOT'] . "/lovo-api/config/config.php");
 
-  if ( isset($_GET['imageID']) )
+  if ( isset($_GET['image_id']) )
   {
-    $sql = "SELECT image FROM image WHERE id = " . $_GET['imageID'];
+    $sql = "SELECT image FROM image WHERE id = " . $_GET['image_id'];
     $query = mysqli_query($connect, $sql);
     $imageData = mysqli_fetch_array($query, MYSQLI_NUM);
 

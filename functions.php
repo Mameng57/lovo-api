@@ -5,11 +5,12 @@
   {
     global $connect;
     $images = array();
+    $imageViewPath = "localhost/lovo-api/helpers/image_view.php?image_id=";
 
-    $sql = $connect -> query("SELECT * FROM image WHERE id_session = $sessionID");
+    $sql = $connect -> query("SELECT id FROM image WHERE id_session = $sessionID");
     while ( $row = mysqli_fetch_assoc($sql) )
     {
-      $images[] = $row['image'];
+      $images[] = $imageViewPath . $row['id'];
     }
 
     $response = array(
