@@ -1,6 +1,11 @@
 <?php
   require_once "config/config.php";
 
+  function generate_token(string $username): string
+  {
+    return md5($username . rand(0, 255));
+  }
+
   function check_token(string $personalToken): bool
   {
     global $connect;
@@ -28,10 +33,14 @@
 
     if ( $result )
     {
-      $personalToken = md5($username . rand(0, 255));
+      $personalToken = generate_token($username);
+      $id = $result['id'];
 
       $authenticate = mysqli_query(
-        $connect, "INSERT INTO token VALUES ('$personalToken', " . $result['id'] . ")"
+        $connect,
+        "INSERT INTO token VALUES ('$personalToken', $id)
+         ON DUPLICATE KEY UPDATE id = '$personalToken'
+        "
       );
 
       if ( $authenticate )
