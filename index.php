@@ -30,7 +30,7 @@
       break;
     }
   }
-  catch (TypeError)
+  catch ( TypeError )
   {
     $response = array(
       'status' => 400,
@@ -38,6 +38,19 @@
     );
 
     header("Content-Type: application/json", true, $response['status']);
+  }
+  catch ( mysqli_sql_exception )
+  {
+    $response = array(
+      'status' => 500,
+      'message' => "Encountered some serious issues on the server, please contact admin...",
+    );
+
+    header("Content-Type: application/json", true, $response['status']);
+  }
+  finally
+  {
+    mysqli_close($connect);
   }
 
   echo json_encode($response);
