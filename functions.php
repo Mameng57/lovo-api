@@ -29,7 +29,7 @@
       {
         $response = array(
           'status' => 200,
-          'message' => 'Succesfully Logged In.',
+          'message' => 'Login berhasil.',
           'username' => $username,
           'password' => sha1($password),
           'date' => date("c", time()),
@@ -40,7 +40,7 @@
       {
         $response = array(
           'status' => 500,
-          'message' => "Failed to Logged In, Server Internal Failure, Please contact admin...",
+          'message' => "Login gagal. Gangguan Internal Server, Silahkan hubungi admin...",
         );
       }
     }
@@ -48,7 +48,7 @@
     {
       $response = array(
         'status' => 401,
-        'message' => "Failed to Log in, please check credentials...",
+        'message' => "Login gagal. Silahkan periksa kembali data kredensial akun...",
       );
     }
 
@@ -73,7 +73,7 @@
 
       $response = array(
         'status' => 200,
-        'message' => "Success.",
+        'message' => "Sukses menerima data.",
         'data' => $images,
       );
     }
@@ -81,7 +81,7 @@
     {
       $response = array(
         'status' => 401,
-        'message' => "Invalid Token Verification, Please try again...",
+        'message' => "Verifikasi token gagal, silahkan coba lagi...",
       );
     }
 

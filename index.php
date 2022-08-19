@@ -22,8 +22,8 @@
       default:
         $response = array(
           'status' => 404,
-          'message' => 
-            "Function Not Found or Undefined, please check the parameter name."
+          'message' =>
+            "Fungsi yang dimaksud tidak ada. Silahkan periksa kembali penggunaan nama fungsi..."
         );
 
         header("Content-Type: application/json", true, $response['status']);
@@ -34,7 +34,7 @@
   {
     $response = array(
       'status' => 400,
-      'message' => "Invalid Parameter Format, please check the required parameters.",
+      'message' => "Format parameter salah. Silahkan periksa field parameter yang diperlukan...",
     );
 
     header("Content-Type: application/json", true, $response['status']);
@@ -43,7 +43,7 @@
   {
     $response = array(
       'status' => 500,
-      'message' => "Encountered some serious issues on the server, please contact admin...",
+      'message' => "Fatal Error. Terdapat masalah pada sisi server, silahkan hubungi admin...",
     );
 
     header("Content-Type: application/json", true, $response['status']);
