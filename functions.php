@@ -2,18 +2,50 @@
   require_once "config/config.php";
   require_once "helpers/tokenization.php";
 
+  function user_register(
+    string $name,
+    string $phone,
+    string $email = null,
+    string $address,
+    string $password
+  ): array
+  {
+    global $connect;
+
+    $sql = (
+      "INSERT INTO user (name, phone, email, address, password)
+       VALUES ('$name', '$phone', '$email', '$address', '$password')"
+    );
+    $query = mysqli_query($connect, $sql);
+
+    if ( $query )
+      $response = array(
+        'status' => 200,
+        'message' => 'Daftar akun berhasil.',
+      );
+    else
+      $response = array(
+        'status' => 400,
+        'message' => 'Daftar akun gagal, periksa kembali format dan data yang dimasukan.',
+      );
+
+    return $response;
+  }
+
   function user_login(string $username, string $password): array
   {
     global $connect;
 
     $sql = (
-      "SELECT * FROM user WHERE phone = '$username' OR email = '$username'
-      AND password = '" . sha1($password) . "'"
+      "SELECT * FROM user WHERE phone = '$username' OR email = '$username'"
     );
     $query = mysqli_query($connect, $sql);
     $result = mysqli_fetch_assoc($query);
 
-    if ( $result )
+    if (
+      ($result['phone'] == $username || $result['email'] == $username)
+      && $result['password'] == sha1($password)
+    )
     {
       $personalToken = generate_token($username);
       $id = $result['id'];
