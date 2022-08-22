@@ -3,7 +3,7 @@
 
   $fn = $_GET['function'] ?? null;
 
-  $args = array(
+  $params = array(
     'name' => $_POST['name'] ?? null,
     'phone' => $_POST['phone'] ?? null,
     'email' => $_POST['email'] ?? null,
@@ -19,18 +19,18 @@
     {
       case "user_register":
         $response = user_register(
-          $args['name'],
-          $args['phone'],
-          $args['email'],
-          $args['address'],
-          $args['password'],
+          $params['name'],
+          $params['phone'],
+          $params['email'],
+          $params['address'],
+          $params['password'],
         );
         break;
       case "user_login":
-        $response = user_login($args['username'], $args['password']);
+        $response = user_login($params['username'], $params['password']);
         break;
       case "get_images":
-        $response = get_images($args['personal_token'], 1);
+        $response = get_images($params['personal_token'], 1);
         break;
       default:
         $response = array(
