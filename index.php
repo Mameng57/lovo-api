@@ -4,6 +4,10 @@
   $fn = $_GET['function'] ?? null;
 
   $args = array(
+    'name' => $_POST['name'] ?? null,
+    'phone' => $_POST['phone'] ?? null,
+    'email' => $_POST['email'] ?? null,
+    'address' => $_POST['address'] ?? null,
     'username' => $_POST['username'] ?? null,
     'password' => $_POST['password'] ?? null,
     'personal_token' => $_POST['personal_token'] ?? null,
@@ -13,6 +17,15 @@
   {
     switch ( $fn )
     {
+      case "user_register":
+        $response = user_register(
+          $args['name'],
+          $args['phone'],
+          $args['email'],
+          $args['address'],
+          $args['password'],
+        );
+        break;
       case "user_login":
         $response = user_login($args['username'], $args['password']);
         break;
