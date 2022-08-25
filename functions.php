@@ -119,5 +119,31 @@
     return $response;
   }
 
+  function mark_images(string $jsonString): array
+  {
+    global $connect;
 
+    $data = json_decode($jsonString, true);
+    $isQueryFailed = false;
+
+    foreach ($data as $imageID => $detail)
+    {
+      $sql = "INSERT INTO marked (details, id_image) VALUES('$detail', $imageID)";
+      $query = mysqli_query($connect, $sql);
+
+      if ( !$query )
+        $isQueryFailed = true;
+    }
+
+    if ( $isQueryFailed )
+      return array(
+        'status' => 400,
+        'message' => "Satu atau lebih gambar gagal untuk ditandai, silahkan coba lagi...",
+      );
+
+    return array(
+      'status' => 200,
+      'message' => "Gambar berhasil ditandai.",
+    );
+  }
 ?>
