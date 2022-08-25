@@ -23,11 +23,11 @@
         'status' => 200,
         'message' => 'Daftar akun berhasil.',
       );
-
-    $response = array(
-      'status' => 400,
-      'message' => 'Daftar akun gagal, periksa kembali format dan data yang dimasukan.',
-    );
+    else
+      $response = array(
+        'status' => 400,
+        'message' => 'Daftar akun gagal, periksa kembali format dan data yang dimasukan.',
+      );
 
     header("Content-Type: application/json", true, $response['status']);
     return $response;
@@ -143,11 +143,11 @@
         'status' => 400,
         'message' => "Satu atau lebih gambar gagal untuk ditandai, silahkan coba lagi...",
       );
-
-    $response = array(
-      'status' => 200,
-      'message' => "Gambar berhasil ditandai.",
-    );
+    else
+      $response = array(
+        'status' => 200,
+        'message' => "Gambar berhasil ditandai.",
+      );
 
     header("Content-Type: application/json", true, $response['status']);
     return $response;
