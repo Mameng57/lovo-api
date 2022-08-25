@@ -127,7 +127,7 @@
     global $connect;
 
     $data = json_decode($jsonString, true);
-    $isQueryFailed = false;
+    $isQuerySucceed = true;
 
     foreach ($data as $imageID => $detail)
     {
@@ -135,18 +135,18 @@
       $query = mysqli_query($connect, $sql);
 
       if ( !$query )
-        $isQueryFailed = true;
+        $isQuerySucceed = false;
     }
 
-    if ( $isQueryFailed )
-      $response = array(
-        'status' => 400,
-        'message' => "Satu atau lebih gambar gagal untuk ditandai, silahkan coba lagi...",
-      );
-    else
+    if ( $isQuerySucceed )
       $response = array(
         'status' => 200,
         'message' => "Gambar berhasil ditandai.",
+      );
+    else
+      $response = array(
+        'status' => 400,
+        'message' => "Satu atau lebih gambar gagal untuk ditandai, silahkan coba lagi...",
       );
 
     header("Content-Type: application/json", true, $response['status']);
