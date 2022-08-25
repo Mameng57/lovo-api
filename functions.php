@@ -100,7 +100,7 @@
       $sql = $connect -> query("SELECT id FROM image WHERE id_session = $sessionID");
       while ( $row = mysqli_fetch_assoc($sql) )
       {
-        $images[] = $imageViewPath . $row['id'];
+        $images[] = array('id' => (int) $row['id'], 'url' => $imageViewPath . $row['id']);
       }
 
       $response = array(
