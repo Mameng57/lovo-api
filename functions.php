@@ -19,17 +19,15 @@
     $query = mysqli_query($connect, $sql);
 
     if ( $query )
-      $response = array(
+      return array(
         'status' => 200,
         'message' => 'Daftar akun berhasil.',
       );
-    else
-      $response = array(
-        'status' => 400,
-        'message' => 'Daftar akun gagal, periksa kembali format dan data yang dimasukan.',
-      );
 
-    return $response;
+    return array(
+      'status' => 400,
+      'message' => 'Daftar akun gagal, periksa kembali format dan data yang dimasukan.',
+    );
   }
 
   function user_login(string $username, string $password): array
@@ -120,4 +118,6 @@
     header("Content-Type: application/json", true, $response['status']);
     return $response;
   }
+
+
 ?>
